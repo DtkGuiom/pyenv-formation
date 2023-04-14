@@ -28,8 +28,20 @@ pipeline {
 			script{
 				versionpython.each {item ->
 					withPythonEnv("/usr/bin/${item}") {
-							echo ${item}
 							sh 'python -m py_compile sources/add2vals.py sources/calc.py'
+					}
+				}
+			}
+		}
+    }	
+	stage('Tests') {
+        agent { label 'SlaveLinux' }
+		  steps{
+			script{
+				versionpython.each {item ->
+					withPythonEnv("/usr/bin/${item}") {
+							sh 'py.test --verbose --junit-xml test-reports/results.xml sources/test_calc.py'
+							junit 'test-reports/results.xml'
 					}
 				}
 			}
