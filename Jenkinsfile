@@ -1,4 +1,4 @@
-def versionpython= ["python3.8", "python3.9"]
+def versionpython= ["python3.7", "python3.8", "python3.9"]
 
 pipeline {
   agent none
